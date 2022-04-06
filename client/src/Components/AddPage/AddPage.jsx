@@ -46,6 +46,17 @@ function AddPage() {
                     level,
                 }
             });
+            setLevel("");
+            setWord("");
+            setMeaning("");
+            setOnReading("");
+            setOnEgWord("");
+            setOnEgMeaning("");
+            setOnEgPronounciation("");
+            setKunReading("");
+            setKunEgWord("");
+            setKunEgMeaning("");
+            setKunEgPronounciation("");
             setLoading(false);
         } catch (error) {
             console.log(error);
