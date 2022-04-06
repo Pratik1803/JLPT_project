@@ -1,0 +1,41 @@
+.kanji_card{
+    width: 60vw;
+    height: fit-content;
+    min-height: 60vh;
+    background-color: #F4F4F4;
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .flexbox{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        .on_reading,.kun_reading{
+            width: 50%;
+            padding: 20px;
+            text-align: center;
+            h3{
+                text-decoration: underline;
+            }
+            p{
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width:800px){
+    .kanji_card{
+        width: 100vw;
+        .flexbox{
+            flex-direction: column;
+            .on_reading,.kun_reading{
+                width: 100%;
+            }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+.add_page {
+	min-height: 100vh;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+    padding: 10vh 0px;
+	.wrapper {
+		width: 60vw;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		input {
+			margin: 5px 0px;
+            width: 60%;
+		}
+        button{
+            padding: 5px 10px;
+        }
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.add_page {
+		.wrapper {
+			width: 100%;
+            input{
+                width: 80%;
+            }
+		}
+	}
+}

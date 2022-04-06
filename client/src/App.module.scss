@@ -1,0 +1,29 @@
+.app{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    select{
+        margin-bottom: 20px;
+    }
+    button{
+        outline: none;
+        border: none;
+        padding: 10px ;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .add_btn{
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        outline: none;
+        border: none;
+        padding: 10px 5px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+}
