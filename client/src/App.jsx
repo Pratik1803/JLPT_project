@@ -52,6 +52,10 @@ function App() {
 			const result = await axios({
 				method: "get",
 				url: "/kanjis",
+				headers: {
+					Accept: "application/json",
+					"User-Agent": "axios 0.21.1",
+				},
 			});
 			setWords(result.data);
 			setWord(result.data[0]);
@@ -79,16 +83,22 @@ function App() {
 									<option value="5">2</option>
 									<option value="5">1</option>
 								</select> */}
-								{loading?<p>Loading</p>:<><div
-									onClick={() => {
-										setShow(!show);
-									}}
-									style={{ cursor: "pointer" }}
-								>
-									{show ? <KanjiCard /> : <Flashcard />}
-								</div>
-								<br />
-								<button onClick={generateRandomWord}>Next</button></>}
+								{loading ? (
+									<p>Loading</p>
+								) : (
+									<>
+										<div
+											onClick={() => {
+												setShow(!show);
+											}}
+											style={{ cursor: "pointer" }}
+										>
+											{show ? <KanjiCard /> : <Flashcard />}
+										</div>
+										<br />
+										<button onClick={generateRandomWord}>Next</button>
+									</>
+								)}
 								<Link to="/add">
 									<button className={Styles.add_btn}>Add Kanji</button>
 								</Link>
