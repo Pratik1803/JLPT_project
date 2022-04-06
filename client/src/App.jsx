@@ -52,10 +52,6 @@ function App() {
 			const result = await axios({
 				method: "get",
 				url: "/kanjis",
-				headers: {
-					Accept: "application/json",
-					"User-Agent": "axios 0.21.1",
-				},
 			});
 			setWords(result.data);
 			setWord(result.data[0]);
