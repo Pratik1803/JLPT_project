@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = new express.Router;
 const Kanjis = require('../models/Kanji');
 
 router.post("/add_kanji", async (req,res)=>{
