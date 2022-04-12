@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import {StateContext} from "../../App";
 
 function KanjiCard() {
-  const word = useContext(StateContext);
+  const {word} = useContext(StateContext);
   return (
     <div className={Styles.kanji_card}>
       <h1>{word.word}</h1>

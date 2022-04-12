@@ -6,9 +6,11 @@ const port = process.env.PORT || 8000;
 
 //routers
 const addKanjis = require("./routes/kanji");
+const user = require('./routes/user');
 
 app.use(express.json());
 app.use(addKanjis);
+app.use(user);
 
 
 if (process.env.NODE_ENV == "production") {

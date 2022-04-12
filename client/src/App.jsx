@@ -6,6 +6,9 @@ import { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import AddPage from "./Components/AddPage/AddPage";
 import axios from "axios";
+import Login from "./Components/Login/Login";
+import Signup from "./Components/SignUp/Signup";
+import Favs from "./Components/Favs/Favs";
 
 const StateContext = createContext();
 
@@ -33,6 +36,11 @@ function App() {
 			},
 		},
 		level: "5",
+	});
+	const [states, setStates] = useState({
+		userLoggedIn: false,
+		userId: "",
+		userFavs: [],
 	});
 
 	function generateRandomWord() {
@@ -66,7 +74,7 @@ function App() {
 
 	return (
 		<div className={Styles.app}>
-			<StateContext.Provider value={word}>
+			<StateContext.Provider value={{ word, states, setStates }}>
 				<Routes>
 					<Route
 						path="/"
@@ -79,6 +87,20 @@ function App() {
 									<option value="5">2</option>
 									<option value="5">1</option>
 								</select> */}
+								{states.userLoggedIn ? (
+									<Link to={`/favs?user_id=${states.userId}`}>
+										<button className={Styles.signup_btn}>Open Favs</button>
+									</Link>
+								) : (
+									<>
+										<Link to="/login">
+											<button className={Styles.login_btn}>Login</button>
+										</Link>
+										<Link to="/signup">
+											<button className={Styles.signup_btn}>Sign Up</button>
+										</Link>
+									</>
+								)}
 								{loading ? (
 									<p>Loading</p>
 								) : (
@@ -92,7 +114,10 @@ function App() {
 											{show ? <KanjiCard /> : <Flashcard />}
 										</div>
 										<br />
-										<button onClick={generateRandomWord}>Next</button>
+										<div className={Styles.action_btns}>
+											<button onClick={generateRandomWord}>Next</button>
+											{states.userLoggedIn?<button style={{marginLeft:"20px"}}>Add to Favs</button>:null}
+										</div>
 									</>
 								)}
 								<Link to="/add">
@@ -106,6 +131,30 @@ function App() {
 						element={
 							<>
 								<AddPage />
+							</>
+						}
+					/>
+					<Route
+						path="/login"
+						element={
+							<>
+								<Login />
+							</>
+						}
+					/>
+					<Route
+						path="/signup"
+						element={
+							<>
+								<Signup />
+							</>
+						}
+					/>
+					<Route
+						path="/favs"
+						element={
+							<>
+								<Favs />
 							</>
 						}
 					/>
