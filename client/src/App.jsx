@@ -13,6 +13,7 @@ import Favs from "./Components/Favs/Favs";
 const StateContext = createContext();
 
 function App() {
+	console.log("HEllo");
 	const [show, setShow] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [words, setWords] = useState([]);
