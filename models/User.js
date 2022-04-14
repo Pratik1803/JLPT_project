@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const res = require("express/lib/response");
 
 const userSchema = new mongoose.Schema({
 	username: {
-		type:String,
-		unique:true,
-		trim:true
+		type: String,
+		unique: true,
+		trim: true,
 	},
 	email: {
 		type: String,
@@ -15,14 +17,35 @@ const userSchema = new mongoose.Schema({
 				throw new Error("Email is Invalid!");
 			}
 		},
-		unique:true,
-		trim:true
+		unique: true,
+		trim: true,
 	},
-	favs:[String],
+	favs: [String],
 	password: String,
-	
+	tokens:[{
+		token:{
+			type:String,
+			required:true
+		}
+	}]
 });
 
+//generating tokens
+userSchema.methods.generateToken = async function () {
+	try {
+		const token = await jwt.sign(
+			{ _id: this._id.toString() },
+			"mynameispratikvaidyamerndeveloper"
+		);
+		this.tokens = [{token}];
+		await this.save();
+		return token;
+	} catch (error) {
+		res.send("Token Error: " + error);
+	}
+};
+
+//hashing passwords
 userSchema.pre("save", async function (next) {
 	try {
 		this.password = await bcrypt.hash(this.password, 10);

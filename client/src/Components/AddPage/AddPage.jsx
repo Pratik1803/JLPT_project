@@ -46,7 +46,6 @@ function AddPage() {
                     level,
                 }
             });
-            setLevel("");
             setWord("");
             setMeaning("");
             setOnReading("");

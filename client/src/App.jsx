@@ -13,7 +13,6 @@ import Favs from "./Components/Favs/Favs";
 const StateContext = createContext();
 
 function App() {
-	console.log("HEllo");
 	const [show, setShow] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [words, setWords] = useState([]);
@@ -57,20 +56,37 @@ function App() {
 
 	const getData = async () => {
 		try {
-			setLoading(true);
 			const result = await axios({
 				method: "get",
 				url: "/kanjis",
 			});
 			setWords(result.data);
 			setWord(result.data[0]);
-			setLoading(false);
 		} catch (error) {
 			console.log(error);
 		}
 	};
+
+	const auth = async () => {
+		setLoading(true);
+		try {
+			const result = await axios({
+				method: "get",
+				url: "/auth",
+				withCredentials: true,
+			});
+			if (result.data) {
+				setStates((prev) => ({ ...prev, userLoggedIn: true }));
+				getData();
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		setLoading(false);
+	};
+
 	useEffect(() => {
-		getData();
+		auth();
 	}, []);
 
 	return (
@@ -117,7 +133,11 @@ function App() {
 										<br />
 										<div className={Styles.action_btns}>
 											<button onClick={generateRandomWord}>Next</button>
-											{states.userLoggedIn?<button style={{marginLeft:"20px"}}>Add to Favs</button>:null}
+											{states.userLoggedIn ? (
+												<button style={{ marginLeft: "20px" }}>
+													Add to Favs
+												</button>
+											) : null}
 										</div>
 									</>
 								)}

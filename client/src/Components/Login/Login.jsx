@@ -20,7 +20,6 @@ function Login() {
 				url: "/login_user",
 				data: user,
 			});
-			console.log(result.data);
 			if(!result.data){
 				alert("Login failed!")
 			}else{
