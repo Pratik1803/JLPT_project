@@ -22,9 +22,10 @@ function Signup() {
 					method: "post",
 					url: "/create_user",
 					data: user,
+					withCredentials:true,
 				});
 				alert("User created successfully!");
-				navigator(`/?user_id=${result.data._id}`);
+				navigator(`/`);
 				setUser({
 					username: "",
 					email: "",

@@ -41,8 +41,24 @@ userSchema.methods.generateToken = async function () {
 		await this.save();
 		return token;
 	} catch (error) {
-		res.send("Token Error: " + error);
+		res.send("Token generation Error: " + error);
 	}
+};
+
+//WRPhYTVCe
+//WRPhYTVCe
+
+//Vw2FQAyYWhgC
+
+// deleting token
+userSchema.methods.deleteToken = async function(){
+	try {
+		this.tokens = undefined;
+		await this.save();
+		return true; // returns true if token deleted successfully
+	} catch (error) {
+		res.status(401).send(`Error While Deleting token: ${error}`);
+	};
 };
 
 //hashing passwords

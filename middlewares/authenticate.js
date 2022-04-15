@@ -4,16 +4,19 @@ const User = require("../models/User");
 
 const Authenticate = async (req,res,next)=>{
     try {
-        const token = req.cookies.jwt;
-        const verifyToken = await jwt.verify(token, "mynameispratikvaidyamerndeveloper");
-        const rootUser = await User.findOne({_id:verifyToken._id, "tokens.token":token});
-        if(!rootUser) throw new Error("");
-        req.token = token;
-        req.rootUser = rootUser;
-        req.userID = rootUser._id;
-        next();
+        if(req.cookies.jwt){
+            const token = req.cookies.jwt;
+            const verifyToken = await jwt.verify(token, "mynameispratikvaidyamerndeveloper");
+            const rootUser = await User.findOne({_id:verifyToken._id, "tokens.token":token});
+            req.token = token;
+            req.rootUser = rootUser;
+            req.userID = rootUser._id;
+            next();
+        }else{
+            throw new Error();
+        }
     } catch (error) {
-        res.status(401).send("No Token Provided!");
+        res.status(200).send(false);
         console.log(error);
     }
 };

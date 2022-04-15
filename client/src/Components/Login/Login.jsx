@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Styles from "./Login.module.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {StateContext} from '../../App';
+import { StateContext } from "../../App";
 import { useContext } from "react";
+import cookie, { useCookies } from "react-cookie";
 
 function Login() {
-	const {states, setStates} = useContext(StateContext);
+	const { states, setStates } = useContext(StateContext);
 	const navigator = useNavigate();
 	const [user, setUser] = useState({
 		username: "",
@@ -20,17 +21,23 @@ function Login() {
 				url: "/login_user",
 				data: user,
 			});
-			if(!result.data){
-				alert("Login failed!")
-			}else{
+			if (!result.data) {
+				alert("Login failed!");
+			} else {
 				alert("login Successful!");
-				setStates((prev)=>({...prev, userId: result.data._id, userLoggedIn:true, userFavs:result.data.favs}));
+				setStates((prev) => ({
+					...prev,
+					userId: result.data._id,
+					userLoggedIn: true,
+					userFavs: result.data.favs,
+				}));
 				navigator(`/?user_id=${result.data._id}`);
-			};
+			}
 		} catch (error) {
 			console.log(error);
-		};
+		}
 	};
+
 	return (
 		<div className={Styles.login}>
 			<h1>Login</h1>
