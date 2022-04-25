@@ -34,6 +34,7 @@ function Home({ setWord, word }) {
 				method: "get",
 				url: "/kanjis",
 			});
+			console.log(result);
 			setWords(result.data);
 			setWord(result.data[0]);
 		} catch (error) {

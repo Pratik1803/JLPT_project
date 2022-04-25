@@ -6,7 +6,7 @@ const Kanjis = require("../models/Kanji");
 router.post("/add_kanji", async (req, res) => {
 	try {
 		const result = await Kanjis(req.body).save();
-		res.status(201).send(result);
+		res.status(201).json(result);
 	} catch (error) {
 		console.log(error);
 	}
@@ -15,7 +15,7 @@ router.post("/add_kanji", async (req, res) => {
 router.get("/kanjis", cors({ origin: true }), async (req, res) => {
 	try {
 		const result = await Kanjis.find();
-		res.status(200).send(result);
+		res.status(200).json(result);
 	} catch (error) {
 		console.log(error);
 	}

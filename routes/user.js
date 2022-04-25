@@ -15,7 +15,7 @@ router.post("/create_user", async (req, res) => {
 		// 	httpOnly: true,
 		// 	// expires: new Date(Date.now() + 600000),
 		// });
-		res.status(201).send(result);
+		res.status(201).json(result);
 	} catch (error) {
 		console.log(error);
 	}
@@ -33,9 +33,9 @@ router.post("/login_user", async (req, res) => {
 			// 	httpOnly: true,
 			// 	// expires: new Date(Date.now() + 600000),
 			// });
-			res.status(200).send(result);
+			res.status(200).json(result);
 		} else {
-			res.send(false);
+			res.json(false);
 		}
 	} catch (error) {
 		console.log(error);
@@ -52,7 +52,7 @@ router.get("/logout", async (req, res) => {
 		// const user = await User.findOne({ _id: verifyToken._id });
 		// const result = await user.deleteToken(); // returns true is token is deleted successfully
 		res.clearCookie("jwt");
-		res.status(200).send("dome");
+		res.status(200).json("dome");
 	} catch (error) {
 		console.log(error);
 	}
@@ -62,11 +62,11 @@ router.get("/logout", async (req, res) => {
 router.get("/auth", Authenticate, async (req, res) => {
 	try {
 		if (!req.token) {
-			return res.status(401).send(false);
+			return res.status(401).json(false);
 		}
-		res.status(200).send(true);
+		res.status(200).json(true);
 	} catch (error) {
-		res.status(401).send(false);
+		res.status(401).json(false);
 		console.log(error);
 	}
 });
