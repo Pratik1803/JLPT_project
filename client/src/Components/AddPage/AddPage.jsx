@@ -4,7 +4,7 @@ import axios from "axios";
 
 function AddPage() {
     const [loading, setLoading] = useState(false);
-    const [level, setLevel] = useState(5);
+    const [level, setLevel] = useState(4);
 	const [word, setWord] = useState("");
     const [meaning, setMeaning] = useState("");
     //For On-Readings
