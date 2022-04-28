@@ -14,7 +14,7 @@ router.post("/add_kanji", async (req, res) => {
 
 router.get("/kanjis", cors({ origin: true }), async (req, res) => {
 	try {
-		const result = await Kanjis.find();
+		const result = await Kanjis.find({level:req.query.level});
 		res.status(200).json(result);
 	} catch (error) {
 		console.log(error);
