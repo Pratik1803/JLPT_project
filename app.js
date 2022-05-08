@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
 const port = process.env.PORT || 8000;
+const cors = require('cors');
 
 //routers
 const addKanjis = require("./routes/kanji");
