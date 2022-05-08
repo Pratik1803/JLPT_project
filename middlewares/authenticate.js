@@ -11,10 +11,8 @@ const Authenticate = async (req,res,next)=>{
             req.token = token;
             req.rootUser = rootUser;
             req.userID = rootUser._id;
-            next();
-        }else{
-            throw new Error();
-        }
+        };
+        next();
     } catch (error) {
         res.status(200).send(false);
         console.log(error);
