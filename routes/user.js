@@ -41,7 +41,7 @@ router.post("/login_user",cors({ origin: true }), async (req, res) => {
 });
 
 //For Authenticating User
-router.get("/auth",cors({ origin: true }), Authenticate, async (req, res) => {
+router.post("/auth",cors({ origin: true }), Authenticate, async (req, res) => {
 	try {
 		if (!req.token) {
 			return res.status(401).json({auth:false});
@@ -54,7 +54,7 @@ router.get("/auth",cors({ origin: true }), Authenticate, async (req, res) => {
 });
 
 //To logout the user by deleting the cookie
-router.get("/logout",cors({ origin: true }), async(req,res)=>{
+router.post("/logout",cors({ origin: true }), async(req,res)=>{
 	try {
 		res.clearCookie("jwt");
 		res.json({message:"logout successful!"})
