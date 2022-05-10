@@ -7,10 +7,8 @@ import Flashcard from "../Flashcards/Flashcard";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 
 function Home({ setWord, word }) {
-	const [cookie, setCookie, removeCookie] = useCookies(['jwt'])
 	const navigator = useNavigate();
 	const { states, setStates } = useContext(StateContext);
 	const [loading, setLoading] = useState(false);
@@ -32,7 +30,7 @@ function Home({ setWord, word }) {
 		try {
 			const result = await axios({
 				method: "get",
-				url: "/kanjis",
+				url: "http://localhost:8000/kanjis?level=5",
 			});
 			console.log(result);
 			setWords(result.data);
@@ -47,7 +45,7 @@ function Home({ setWord, word }) {
 		try {
 			const result = await axios({
 				method: "get",
-				url: "/auth",
+				url: "http://localhost:8000/auth",
 				withCredentials: true,
 			});
 			if (result.data) {
@@ -66,7 +64,7 @@ function Home({ setWord, word }) {
 		try {
 			const result = await axios({
 				method: "get",
-				url: "/logout",
+				url: "http://localhost:8000/logout",
 				withCredentials: true,
 			});
 			if(result.data){
@@ -78,7 +76,7 @@ function Home({ setWord, word }) {
 	};
 
 	useEffect(() => {
-		// auth();
+		auth();
 		getData();
 	}, []);
 
@@ -97,7 +95,7 @@ function Home({ setWord, word }) {
 				</Link>
 			) : (
 				<>
-					<Link to="/">
+					<Link to="/login">
 						<button className={Styles.login_btn}>Login</button>
 					</Link>
 					<Link to="/signup">

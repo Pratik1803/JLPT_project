@@ -10,7 +10,6 @@ import Login from "./Components/Login/Login";
 import Signup from "./Components/SignUp/Signup";
 import Favs from "./Components/Favs/Favs";
 import Home from "./Components/Home/Home";
-import { CookiesProvider } from "react-cookie";
 
 const StateContext = createContext();
 
@@ -44,7 +43,6 @@ function App() {
 
 	return (
 		<div className={Styles.app}>
-			<CookiesProvider>
 				<StateContext.Provider value={{ word, states, setStates }}>
 					<Routes>
 						<Route path="/" element={<Home word={word} setWord={setWord} />} />
@@ -82,7 +80,6 @@ function App() {
 						/>
 					</Routes>
 				</StateContext.Provider>
-			</CookiesProvider>
 		</div>
 	);
 }

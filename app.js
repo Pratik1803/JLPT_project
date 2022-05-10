@@ -11,9 +11,10 @@ const addKanjis = require("./routes/kanji");
 const user = require("./routes/user");
 const jwt = require("jsonwebtoken");
 
-app.use(cors({ origin: true }));
+
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({ origin: true }));
 app.use(addKanjis);
 app.use(user);
 
@@ -23,7 +24,11 @@ if (process.env.NODE_ENV == "production") {
 	app.get("*", (req, res) => {
 		res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 	});
-}
+};
+
+// app.get("/", (req,res)=>{
+// 	res.json({message:"Hello from backend kanjis"});
+// });
 
 app.listen(port, () => {
 	console.log(`Listening on port ${port}...`);

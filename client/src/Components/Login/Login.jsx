@@ -4,7 +4,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { StateContext } from "../../App";
 import { useContext } from "react";
-import cookie, { useCookies } from "react-cookie";
 
 function Login() {
 	const { states, setStates } = useContext(StateContext);
@@ -18,7 +17,7 @@ function Login() {
 		try {
 			const result = await axios({
 				method: "post",
-				url: "/login_user",
+				url: "http://localhost:8000/login_user",
 				data: user,
 			});
 			if (!result.data) {
@@ -31,7 +30,7 @@ function Login() {
 					userLoggedIn: true,
 					userFavs: result.data.favs,
 				}));
-				navigator(`/?user_id=${result.data._id}`);
+				navigator(`/`);
 			}
 		} catch (error) {
 			console.log(error);

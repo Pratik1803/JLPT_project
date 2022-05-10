@@ -7,7 +7,7 @@ function Flashcard() {
   const {word} = useContext(StateContext);
   return (
     <div className={Styles.flashcard} >
-      <h1>{word.word}</h1>
+      <h1>{word?.word}</h1>
     </div>
   )
 }
