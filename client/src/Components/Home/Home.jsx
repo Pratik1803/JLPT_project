@@ -30,7 +30,7 @@ function Home({ setWord, word }) {
 		try {
 			const result = await axios({
 				method: "get",
-				url: "http://localhost:8000/kanjis?level=5",
+				url: "/kanjis?level=5",
 			});
 			console.log(result);
 			setWords(result.data);
@@ -45,7 +45,7 @@ function Home({ setWord, word }) {
 		try {
 			const result = await axios({
 				method: "get",
-				url: "http://localhost:8000/auth",
+				url: "/auth",
 				withCredentials: true,
 			});
 			if (result.data) {
