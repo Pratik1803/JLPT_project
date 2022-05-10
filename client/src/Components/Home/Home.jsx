@@ -48,11 +48,8 @@ function Home({ setWord, word }) {
 				url: "/auth",
 				withCredentials: true,
 			});
-			if (result.data) {
+			if (result.data.auth) {
 				setStates((prev) => ({ ...prev, userLoggedIn: true }));
-				getData();
-			} else {
-				navigator("/login");
 			}
 		} catch (error) {
 			console.log(error);
@@ -67,7 +64,8 @@ function Home({ setWord, word }) {
 				url: "/logout",
 				withCredentials: true,
 			});
-			if(result.data){
+			if (result.data.status == 200) {
+				setStates((prev) => ({ ...prev, userLoggedIn: false }));
 				navigator("/login");
 			}
 		} catch (error) {
@@ -89,20 +87,27 @@ function Home({ setWord, word }) {
 									<option value="5">2</option>
 									<option value="5">1</option>
 								</select> */}
-			{states.userLoggedIn ? (
-				<Link to={`/favs?user_id=${states.userId}`}>
-					<button className={Styles.signup_btn}>Open Favs</button>
-				</Link>
-			) : (
-				<>
-					<Link to="/login">
-						<button className={Styles.login_btn}>Login</button>
-					</Link>
-					<Link to="/signup">
-						<button className={Styles.signup_btn}>Sign Up</button>
-					</Link>
-				</>
-			)}
+			<div className={Styles.op_btns}>
+				{states.userLoggedIn ? (
+					<>
+						<button onClick={logout} className={Styles.login_btn}>
+							Logout
+						</button>
+						<Link to={`/favs?user_id=${states.userId}`}>
+							<button className={Styles.signup_btn}>Open Favs</button>
+						</Link>
+					</>
+				) : (
+					<>
+						<Link to="/login">
+							<button className={Styles.login_btn}>Login</button>
+						</Link>
+						<Link to="/signup">
+							<button className={Styles.signup_btn}>Sign Up</button>
+						</Link>
+					</>
+				)}
+			</div>
 			{loading ? (
 				<p>Loading</p>
 			) : (
@@ -117,17 +122,14 @@ function Home({ setWord, word }) {
 					</div>
 					<br />
 					<div className={Styles.action_btns}>
+						<button style={{ marginRight: "20px" }}>Previous</button>
 						<button onClick={generateRandomWord}>Next</button>
-						{states.userLoggedIn ? (
-							<button style={{ marginLeft: "20px" }}>Add to Favs</button>
-						) : null}
 					</div>
 				</>
 			)}
 			<Link to="/add">
 				<button className={Styles.add_btn}>Add Kanji</button>
 			</Link>
-			{/* <button onClick={logout} className={Styles.logOut_btn}>Logout</button> */}
 		</>
 	);
 }

@@ -1,40 +1,45 @@
-.app{
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
-    select{
-        margin-bottom: 20px;
-    }
-    button{
-        outline: none;
-        border: none;
-        padding: 10px ;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    .login_btn,.signup_btn,.add_btn{
-        position: absolute;
-        outline: none;
-        border: none;
-        padding: 10px 5px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    .add_btn{
-        bottom: 20px;
-        right: 20px;
-    }
-    .login_btn,.signup_btn{
+.app {
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	position: relative;
+	select {
+		margin-bottom: 20px;
+	}
+	button {
+		outline: none;
+		border: none;
+		padding: 10px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	.add_btn {
+		position: absolute;
+		outline: none;
+		border: none;
+		padding: 10px 5px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	.add_btn {
+		bottom: 20px;
+		right: 20px;
+	}
+
+	.op_btns {
+		position: absolute;
+		outline: none;
+		border: none;
+		padding: 10px 5px;
+		border-radius: 5px;
         top: 30px;
-    }
-    .login_btn{
-        right: 125px;
-    }
-    .signup_btn{
-        right: 50px;
-    }
+        right: 20px;
+		cursor: pointer;
+		.signup_btn{
+            margin-left: 20px;
+        }
+	}
 }
