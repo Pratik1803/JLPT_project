@@ -17,7 +17,7 @@ function Login() {
 		try {
 			const result = await axios({
 				method: "post",
-				url: "http://localhost:8000/login_user",
+				url: "/login_user",
 				data: user,
 			});
 			if (!result.data) {

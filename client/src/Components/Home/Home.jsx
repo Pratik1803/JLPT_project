@@ -64,7 +64,7 @@ function Home({ setWord, word }) {
 		try {
 			const result = await axios({
 				method: "get",
-				url: "http://localhost:8000/logout",
+				url: "/logout",
 				withCredentials: true,
 			});
 			if(result.data){
