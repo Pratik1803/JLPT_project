@@ -51,9 +51,9 @@ router.get(
 	async (req, res) => {
 		try {
 			if (!req.token) {
-				res.status(200).json({ auth: false, cookie:req.cookies });
+				res.status(200).json({ auth: false, uid:req.userID });
 			}else{
-				res.status(200).json({ auth: true, cookie:req.cookies });
+				res.status(200).json({ auth: true, uid:req.userID });
 			}
 		} catch (error) {
 			res.status(401).json({ message: "Something went Wrong..." });

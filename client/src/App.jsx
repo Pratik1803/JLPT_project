@@ -37,7 +37,7 @@ function App() {
 	});
 	const [states, setStates] = useState({
 		userLoggedIn: false,
-		userId: "",
+		userID: "",
 		userFavs: [],
 	});
 

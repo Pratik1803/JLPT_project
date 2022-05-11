@@ -15,16 +15,51 @@ function Home({ setWord, word }) {
 	const [show, setShow] = useState(false);
 	const [words, setWords] = useState([]);
 
-	function generateRandomWord() {
+	const [wordsSeq, setWordsSeq] = useState([]);
+	const [ptr, setPtr] = useState(0);
+
+	// function getNextWord() {
+	// 	setShow(false);
+	// 	if (loading) return;
+	// 	const random = Math.floor(Math.random() * words.length);
+	// 	if (word === words[random]) {
+	// 		getNextWord();
+	// 	} else {
+	// 		setWord(words[random]);
+	// 	}
+	// };
+
+	function getNextWord() {
 		setShow(false);
 		if (loading) return;
 		const random = Math.floor(Math.random() * words.length);
-		if (word === words[random]) {
-			generateRandomWord();
-		} else {
+		if (wordsSeq.length == -1) {
 			setWord(words[random]);
+			setWordsSeq((prev) => [...prev, random]);
+		} else {
+			if (word !== words[wordsSeq.length - 1]) {
+				if (word === words[random]) {
+					getNextWord();
+				} else {
+					setWord(words[random]);
+					setWordsSeq((prev) => [...prev, random]);
+					if (wordsSeq.length !== 0) {
+						setPtr((prev) => prev + 1);
+					}
+				}
+			} else {
+				setWord(words[wordsSeq[wordsSeq.indexOf(words.indexOf(word)) + 1]]);
+			}
 		}
 	}
+
+	const getPrevWord = () => {
+		setShow(false);
+		if (loading || ptr == 0) return;
+		if (wordsSeq.indexOf(words.indexOf(word)) > 0) {
+			setWord(words[wordsSeq[wordsSeq.indexOf(words.indexOf(word)) - 1]]);
+		}
+	};
 
 	const getData = async () => {
 		try {
@@ -49,8 +84,13 @@ function Home({ setWord, word }) {
 				withCredentials: true,
 			});
 			if (result.data.auth) {
-				setStates((prev) => ({ ...prev, userLoggedIn: true }));
+				setStates((prev) => ({
+					...prev,
+					userLoggedIn: true,
+					userID: result.data.uid,
+				}));
 			}
+			console.log(result.data);
 		} catch (error) {
 			console.log(error);
 		}
@@ -122,8 +162,10 @@ function Home({ setWord, word }) {
 					</div>
 					<br />
 					<div className={Styles.action_btns}>
-						<button style={{ marginRight: "20px" }}>Previous</button>
-						<button onClick={generateRandomWord}>Next</button>
+						<button onClick={getPrevWord} style={{ marginRight: "20px" }}>
+							Previous
+						</button>
+						<button onClick={getNextWord}>Next</button>
 					</div>
 				</>
 			)}
