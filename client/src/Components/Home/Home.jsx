@@ -7,6 +7,7 @@ import Flashcard from "../Flashcards/Flashcard";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Stack, Button } from "@mui/material";
 
 function Home({ setWord, word }) {
 	const navigator = useNavigate();
@@ -120,30 +121,34 @@ function Home({ setWord, word }) {
 
 	return (
 		<>
-			{/* <select name="level" id="" defaultValue={5}>
-									<option value="5">5</option>
-									<option value="5">4</option>
-									<option value="5">3</option>
-									<option value="5">2</option>
-									<option value="5">1</option>
-								</select> */}
+			<h1>JLPT-Kanjis</h1>
+			<Stack>
+				<p>Select Level:</p>
+				<select name="level" id="" defaultValue={5}>
+					<option value="5">5</option>
+					<option value="5">4</option>
+					<option value="5">3</option>
+					<option value="5">2</option>
+					<option value="5">1</option>
+				</select>
+			</Stack>
 			<div className={Styles.op_btns}>
 				{states.userLoggedIn ? (
 					<>
-						<button onClick={logout} className={Styles.login_btn}>
+						<Button onClick={logout} className={Styles.login_btn}>
 							Logout
-						</button>
+						</Button>
 						<Link to={`/favs?user_id=${states.userId}`}>
-							<button className={Styles.signup_btn}>Open Favs</button>
+							<Button className={Styles.signup_btn}>Open Favs</Button>
 						</Link>
 					</>
 				) : (
 					<>
 						<Link to="/login">
-							<button className={Styles.login_btn}>Login</button>
+							<Button className={Styles.login_btn}>Login</Button>
 						</Link>
 						<Link to="/signup">
-							<button className={Styles.signup_btn}>Sign Up</button>
+							<Button className={Styles.signup_btn}>Sign Up</Button>
 						</Link>
 					</>
 				)}
@@ -162,15 +167,15 @@ function Home({ setWord, word }) {
 					</div>
 					<br />
 					<div className={Styles.action_btns}>
-						<button onClick={getPrevWord} style={{ marginRight: "20px" }}>
+						<Button onClick={getPrevWord} style={{ marginRight: "20px" }}>
 							Previous
-						</button>
-						<button onClick={getNextWord}>Next</button>
+						</Button>
+						<Button onClick={getNextWord}>Next</Button>
 					</div>
 				</>
 			)}
 			<Link to="/add">
-				<button className={Styles.add_btn}>Add Kanji</button>
+				<Button className={Styles.add_btn}>Add Kanji</Button>
 			</Link>
 		</>
 	);

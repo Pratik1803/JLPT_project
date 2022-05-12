@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Styles from "./Signup.module.scss";
 import axios from "axios";
-import {StateContext} from "../../App";
+import { StateContext } from "../../App";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Stack, Button, TextField } from "@mui/material";
 
 function Signup() {
-	const {states, setStates} = useContext(StateContext);
+	const { states, setStates } = useContext(StateContext);
 	const navigator = useNavigate();
 	const [user, setUser] = useState({
 		username: "",
@@ -22,7 +23,7 @@ function Signup() {
 					method: "post",
 					url: "/create_user",
 					data: user,
-					withCredentials:true,
+					withCredentials: true,
 				});
 				alert("User created successfully!");
 				navigator(`/`);
@@ -32,7 +33,12 @@ function Signup() {
 					password: "",
 					confirmPassword: "",
 				});
-				setStates((prev)=>({...prev, userId: result.data._id, userLoggedIn:true, userFavs:result.data.favs}));
+				setStates((prev) => ({
+					...prev,
+					userId: result.data._id,
+					userLoggedIn: true,
+					userFavs: result.data.favs,
+				}));
 			} else {
 				setUser((prev) => ({ ...prev, password: "", confirmPassword: "" }));
 				alert("Passwords do not match!");
@@ -44,7 +50,12 @@ function Signup() {
 	return (
 		<div className={Styles.signup}>
 			<h1>Create an Account</h1>
-			<input
+			<Stack spacing={2}>
+			<TextField
+				variant="outlined"
+				size="small"
+				fullwidth
+				autoFocus
 				type="text"
 				value={user.username}
 				onChange={(e) => {
@@ -52,9 +63,12 @@ function Signup() {
 				}}
 				name=""
 				id=""
-				placeholder="Username"
+				label="Username"
 			/>
-			<input
+			<TextField
+				variant="outlined"
+				size="small"
+				fullwidth
 				type="email"
 				name=""
 				value={user.email}
@@ -62,9 +76,12 @@ function Signup() {
 					setUser((prev) => ({ ...prev, email: e.target.value }));
 				}}
 				id=""
-				placeholder="Email"
+				label="Email"
 			/>
-			<input
+			<TextField
+				variant="outlined"
+				size="small"
+				fullwidth
 				type="passowrd"
 				value={user.password}
 				onChange={(e) => {
@@ -72,9 +89,12 @@ function Signup() {
 				}}
 				name=""
 				id=""
-				placeholder="Password"
+				label="Password"
 			/>
-			<input
+			<TextField
+				variant="outlined"
+				size="small"
+				fullwidth
 				type="passowrd"
 				value={user.confirmPassword}
 				onChange={(e) => {
@@ -82,10 +102,18 @@ function Signup() {
 				}}
 				name=""
 				id=""
-				placeholder="Confirm Password"
+				label="Confirm Password"
 			/>
-			<br />
-			<button onClick={addUser}>Signup</button>
+			<div style={{width:"100%", textAlign:"right"}}>
+			<Button onClick={addUser}>Signup</Button>
+			</div>
+			<p>
+				Already have an account?{" "}
+				<Link to="/login">
+					<strong>Login</strong>
+				</Link>
+			</p>
+			</Stack>
 		</div>
 	);
 }

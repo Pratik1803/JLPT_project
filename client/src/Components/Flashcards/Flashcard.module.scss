@@ -1,12 +1,16 @@
 .flashcard{
-    min-height: 200px;
-    height: fit-content;
-    min-width: 300px;
-    width: fit-content;
+    height: 250px;
+    width: 400px;
     background-color: #f4f4f4;
     border-radius: 20px;
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media only screen and (max-width:750px){
+    .flashcard{
+        width: 90vw;
+    }
 }

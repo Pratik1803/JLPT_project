@@ -1,9 +1,12 @@
 .login{
+    h1{
+        margin-bottom: 10px;
+    }
+    a{
+        text-decoration: underline;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    input{
-        margin: 5px 0px;
-    }
 }

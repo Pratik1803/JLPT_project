@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Styles from "./Login.module.scss";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { StateContext } from "../../App";
 import { useContext } from "react";
+import { Button, Stack, TextField } from "@mui/material";
 
 function Login() {
 	const { states, setStates } = useContext(StateContext);
@@ -40,26 +41,39 @@ function Login() {
 	return (
 		<div className={Styles.login}>
 			<h1>Login</h1>
-			<input
-				autoFocus
-				type="text"
-				value={user.username}
-				onChange={(e) => {
-					setUser((prev) => ({ ...prev, username: e.target.value }));
-				}}
-				placeholder="username"
-			/>
-			<input
-				type="password"
-				value={user.password}
-				onChange={(e) => {
-					setUser((prev) => ({ ...prev, password: e.target.value }));
-				}}
-				name=""
-				id=""
-			/>
-			<br />
-			<button onClick={loginUser}>Login</button>
+			<Stack spacing={2} alignItems={"center"} width={"100%"}>
+				<TextField
+					size="small"
+					variant="outlined"
+					autoFocus
+					fullWidth
+					type="text"
+					value={user.username}
+					onChange={(e) => {
+						setUser((prev) => ({ ...prev, username: e.target.value }));
+					}}
+					label="Username"
+				/>
+				<TextField
+					size="small"
+					variant="outlined"
+					type="password"
+					label="Password"
+					fullWidth
+					value={user.password}
+					onChange={(e) => {
+						setUser((prev) => ({ ...prev, password: e.target.value }));
+					}}
+					name=""
+					id=""
+				/>
+				<div style={{ width: "100%", textAlign: "right" }}>
+					<Button onClick={loginUser}>Login</Button>
+				</div>
+				<p>
+					Don't have an account? <Link to="/signup"><strong>Sign Up</strong></Link>
+				</p>
+			</Stack>
 		</div>
 	);
 }

@@ -1,9 +1,12 @@
 .signup{
+    h1{
+        margin-bottom: 10px;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    input{
-        margin: 5px 0px;
+    a{
+        text-decoration: underline;
     }
 }

@@ -10,7 +10,7 @@ const Authenticate = async (req,res,next)=>{
             const rootUser = await User.findOne({_id:verifyToken._id, "tokens.token":token});
             req.token = token;
             req.rootUser = rootUser;
-            req.userID = rootUser._id;
+            req.userID = rootUser?._id;
         };
         next();
     } catch (error) {
