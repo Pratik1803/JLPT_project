@@ -8,27 +8,20 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Stack, Button } from "@mui/material";
+import LoadingButton from "../../utils/LoadingButton";
+import arrToObjConv from "../../helpers/arrToObjConv";
 
 function Home({ setWord, word }) {
 	const navigator = useNavigate();
+	const [level, setLevel] = useState(5);
 	const { states, setStates } = useContext(StateContext);
 	const [loading, setLoading] = useState(false);
+	const [favsLoading, setFavsLoadng] = useState(false);
 	const [show, setShow] = useState(false);
+	const [showFavs, setShowFavs] = useState(false);
 	const [words, setWords] = useState([]);
 
 	const [wordsSeq, setWordsSeq] = useState([]);
-	const [ptr, setPtr] = useState(0);
-
-	// function getNextWord() {
-	// 	setShow(false);
-	// 	if (loading) return;
-	// 	const random = Math.floor(Math.random() * words.length);
-	// 	if (word === words[random]) {
-	// 		getNextWord();
-	// 	} else {
-	// 		setWord(words[random]);
-	// 	}
-	// };
 
 	function getNextWord() {
 		setShow(false);
@@ -44,9 +37,9 @@ function Home({ setWord, word }) {
 				} else {
 					setWord(words[random]);
 					setWordsSeq((prev) => [...prev, random]);
-					if (wordsSeq.length !== 0) {
-						setPtr((prev) => prev + 1);
-					}
+					// if (wordsSeq.length !== 0) {
+					// 	setPtr((prev) => prev + 1);
+					// }
 				}
 			} else {
 				setWord(words[wordsSeq[wordsSeq.indexOf(words.indexOf(word)) + 1]]);
@@ -56,28 +49,30 @@ function Home({ setWord, word }) {
 
 	const getPrevWord = () => {
 		setShow(false);
-		if (loading || ptr == 0) return;
+		if (loading) return;
 		if (wordsSeq.indexOf(words.indexOf(word)) > 0) {
 			setWord(words[wordsSeq[wordsSeq.indexOf(words.indexOf(word)) - 1]]);
 		}
 	};
 
 	const getData = async () => {
+		setLoading(true);
 		try {
 			const result = await axios({
 				method: "get",
-				url: "/kanjis?level=5",
+				url: `/kanjis?level=${level}`,
 			});
 			console.log(result);
 			setWords(result.data);
 			setWord(result.data[0]);
+			setWordsSeq([]);
 		} catch (error) {
 			console.log(error);
 		}
+		setLoading(false);
 	};
 
 	const auth = async () => {
-		setLoading(true);
 		try {
 			const result = await axios({
 				method: "get",
@@ -89,13 +84,13 @@ function Home({ setWord, word }) {
 					...prev,
 					userLoggedIn: true,
 					userID: result.data.uid,
+					userFavs: result.data.favs,
 				}));
 			}
 			console.log(result.data);
 		} catch (error) {
 			console.log(error);
 		}
-		setLoading(false);
 	};
 
 	const logout = async () => {
@@ -114,22 +109,70 @@ function Home({ setWord, word }) {
 		}
 	};
 
+	const addDeleteFromFavs = async () => {
+		setFavsLoadng(true);
+		const favWordObj = arrToObjConv(states.userFavs);
+		try {
+			const result = await axios({
+				method: "patch",
+				url: "/favs",
+				data: {
+					word: word.word,
+					userID: states.userID,
+					action: word.word in favWordObj ? "delete" : "add",
+				},
+			});
+			if (word.word in favWordObj) {
+				console.log("remove");
+				setStates((prev) => ({
+					...prev,
+					userFavs: states.userFavs.filter((ele) => ele !== word.word),
+				}));
+			} else {
+				setStates((prev) => ({
+					...prev,
+					userFavs: [...states.userFavs, word.word],
+				}));
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		setFavsLoadng(false);
+	};
+
+	const toggleFavs = async () => {
+		try {
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	useEffect(() => {
 		auth();
-		getData();
 	}, []);
+
+	useEffect(() => {
+		getData();
+	}, [level]);
 
 	return (
 		<>
 			<h1>JLPT-Kanjis</h1>
 			<Stack>
 				<p>Select Level:</p>
-				<select name="level" id="" defaultValue={5}>
+				<select
+					name="level"
+					id=""
+					defaultValue={level}
+					onChange={(e) => {
+						setLevel(e.target.value);
+					}}
+				>
 					<option value="5">5</option>
-					<option value="5">4</option>
-					<option value="5">3</option>
-					<option value="5">2</option>
-					<option value="5">1</option>
+					<option value="4">4</option>
+					<option value="3">3</option>
+					<option value="2">2</option>
+					<option value="1">1</option>
 				</select>
 			</Stack>
 			<div className={Styles.op_btns}>
@@ -167,16 +210,29 @@ function Home({ setWord, word }) {
 					</div>
 					<br />
 					<div className={Styles.action_btns}>
-						<Button onClick={getPrevWord} style={{ marginRight: "20px" }}>
-							Previous
-						</Button>
-						<Button onClick={getNextWord}>Next</Button>
+						<Stack direction={"row"} spacing={2}>
+							{states.userLoggedIn && (
+								<LoadingButton
+									func={addDeleteFromFavs}
+									innerText={
+										word.word in arrToObjConv(states.userFavs)
+											? "Remove from Favs"
+											: "Add to Favs"
+									}
+									loadingState={favsLoading}
+								/>
+							)}
+							<Button onClick={getPrevWord}>Previous</Button>
+							<Button onClick={getNextWord}>Next</Button>
+						</Stack>
 					</div>
 				</>
 			)}
-			<Link to="/add">
-				<Button className={Styles.add_btn}>Add Kanji</Button>
-			</Link>
+			{states.userID === "627e1957180dd53773615c17" && (
+				<Link to="/add">
+					<Button className={Styles.add_btn}>Add Kanji</Button>
+				</Link>
+			)}
 		</>
 	);
 }

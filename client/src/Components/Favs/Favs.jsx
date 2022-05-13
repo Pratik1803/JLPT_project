@@ -26,7 +26,7 @@ function Favs() {
 	}, []);
 
 	const { states, setStates } = useContext(StateContext);
-	return <div className={Styles.favs}>{loading?"Loading":"Favs"}</div>;
+	return <div className={Styles.favs}>{loading?"Loading":<p>{`[${states.userFavs}]`}</p>}</div>;
 }
 
 export default Favs;

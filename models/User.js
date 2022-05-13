@@ -45,11 +45,6 @@ userSchema.methods.generateToken = async function () {
 	}
 };
 
-//WRPhYTVCe
-//WRPhYTVCe
-
-//Vw2FQAyYWhgC
-
 // deleting token
 userSchema.methods.deleteToken = async function(){
 	try {
@@ -73,6 +68,6 @@ userSchema.pre("save", async function (next) {
 	}
 });
 
-const User = new mongoose.model("user", userSchema);
+const User = mongoose.model("user", userSchema);
 
 module.exports = User;

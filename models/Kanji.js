@@ -23,6 +23,6 @@ const kanjiSchema = new mongoose.Schema({
     level:Number
 });
 
-const Kanjis = mongoose.model("kanji", kanjiSchema);
+const Kanjis = new mongoose.model("kanji", kanjiSchema);
 
 module.exports = Kanjis;
