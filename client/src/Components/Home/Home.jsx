@@ -62,7 +62,6 @@ function Home({ setWord, word }) {
 				method: "get",
 				url: `/kanjis?level=${level}`,
 			});
-			console.log(result);
 			setWords(result.data);
 			setWord(result.data[0]);
 			setWordsSeq([]);
@@ -123,7 +122,6 @@ function Home({ setWord, word }) {
 				},
 			});
 			if (word.word in favWordObj) {
-				console.log("remove");
 				setStates((prev) => ({
 					...prev,
 					userFavs: states.userFavs.filter((ele) => ele !== word.word),
@@ -140,8 +138,35 @@ function Home({ setWord, word }) {
 		setFavsLoadng(false);
 	};
 
-	const toggleFavs = async () => {
+	const getFavs = async () => {
+		setLoading(true);
 		try {
+			const result = await axios({
+				method: "get",
+				url: `/favs/${states.userID}`,
+			});
+			if (result.data.favsArr.length === 0) {
+				setShowFavs(false);
+				alert("You don't have any words bookmarked!");
+			} else {
+				setWords(result.data.favsArr);
+				setWord(result.data.favsArr[0]);
+				setWordsSeq([]);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		setLoading(false);
+	};
+
+	const toggleFavs = async () => {
+		setShowFavs(!showFavs);
+		try {
+			if (showFavs) {
+				getData();
+			} else {
+				getFavs();
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -155,35 +180,43 @@ function Home({ setWord, word }) {
 		getData();
 	}, [level]);
 
+	useEffect(()=>{
+		if(showFavs){
+			getFavs();
+		}
+	},[states.userFavs])
+
 	return (
 		<>
-			<h1>JLPT-Kanjis</h1>
-			<Stack>
-				<p>Select Level:</p>
-				<select
-					name="level"
-					id=""
-					defaultValue={level}
-					onChange={(e) => {
-						setLevel(e.target.value);
-					}}
-				>
-					<option value="5">5</option>
-					<option value="4">4</option>
-					<option value="3">3</option>
-					<option value="2">2</option>
-					<option value="1">1</option>
-				</select>
-			</Stack>
+			<h1>{showFavs ? "Bookmarked Words" : "JLPT-Kanjis"}</h1>
+			{!showFavs && (
+				<Stack>
+					<p>Select Level:</p>
+					<select
+						name="level"
+						id=""
+						defaultValue={level}
+						onChange={(e) => {
+							setLevel(e.target.value);
+						}}
+					>
+						<option value="5">5</option>
+						<option value="4">4</option>
+						<option value="3">3</option>
+						<option value="2">2</option>
+						<option value="1">1</option>
+					</select>
+				</Stack>
+			)}
 			<div className={Styles.op_btns}>
 				{states.userLoggedIn ? (
 					<>
 						<Button onClick={logout} className={Styles.login_btn}>
 							Logout
 						</Button>
-						<Link to={`/favs?user_id=${states.userId}`}>
-							<Button className={Styles.signup_btn}>Open Favs</Button>
-						</Link>
+						<Button className={Styles.signup_btn} onClick={toggleFavs}>
+							{showFavs ? "Random" : "Open Bookmarked"}
+						</Button>
 					</>
 				) : (
 					<>
@@ -206,6 +239,7 @@ function Home({ setWord, word }) {
 						}}
 						style={{ cursor: "pointer" }}
 					>
+						{showFavs && <br />}
 						{show ? <KanjiCard /> : <Flashcard />}
 					</div>
 					<br />
@@ -216,8 +250,8 @@ function Home({ setWord, word }) {
 									func={addDeleteFromFavs}
 									innerText={
 										word.word in arrToObjConv(states.userFavs)
-											? "Remove from Favs"
-											: "Add to Favs"
+											? "Remove Bookmark"
+											: "Add Bookmark"
 									}
 									loadingState={favsLoading}
 								/>

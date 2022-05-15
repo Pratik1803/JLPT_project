@@ -41,4 +41,15 @@ router.patch("/favs", async (req, res) => {
 	}
 });
 
+router.get("/favs/:userID", async (req, res) => {
+	try {
+		const userData = await User.findOne({ _id: req.params.userID });
+		const favsArr = await Kanjis.find({ word: { $in: userData.favs } });
+		res.status(200).json({ favsArr });
+	} catch (error) {
+		res.status(400).json({ message: "Invalid Request!" });
+		console.log(error);
+	}
+});
+
 module.exports = router;

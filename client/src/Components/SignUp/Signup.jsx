@@ -26,19 +26,19 @@ function Signup() {
 					withCredentials: true,
 				});
 				alert("User created successfully!");
-				navigator(`/`);
-				setUser({
-					username: "",
-					email: "",
-					password: "",
-					confirmPassword: "",
-				});
-				setStates((prev) => ({
-					...prev,
-					userId: result.data._id,
-					userLoggedIn: true,
-					userFavs: result.data.favs,
-				}));
+					navigator(`/`);
+					setUser({
+						username: "",
+						email: "",
+						password: "",
+						confirmPassword: "",
+					});
+					setStates((prev) => ({
+						...prev,
+						userId: result.data._id,
+						userLoggedIn: true,
+						userFavs: result.data.favs,
+					}));
 			} else {
 				setUser((prev) => ({ ...prev, password: "", confirmPassword: "" }));
 				alert("Passwords do not match!");
@@ -51,68 +51,68 @@ function Signup() {
 		<div className={Styles.signup}>
 			<h1>Create an Account</h1>
 			<Stack spacing={2}>
-			<TextField
-				variant="outlined"
-				size="small"
-				fullwidth
-				autoFocus
-				type="text"
-				value={user.username}
-				onChange={(e) => {
-					setUser((prev) => ({ ...prev, username: e.target.value }));
-				}}
-				name=""
-				id=""
-				label="Username"
-			/>
-			<TextField
-				variant="outlined"
-				size="small"
-				fullwidth
-				type="email"
-				name=""
-				value={user.email}
-				onChange={(e) => {
-					setUser((prev) => ({ ...prev, email: e.target.value }));
-				}}
-				id=""
-				label="Email"
-			/>
-			<TextField
-				variant="outlined"
-				size="small"
-				fullwidth
-				type="passowrd"
-				value={user.password}
-				onChange={(e) => {
-					setUser((prev) => ({ ...prev, password: e.target.value }));
-				}}
-				name=""
-				id=""
-				label="Password"
-			/>
-			<TextField
-				variant="outlined"
-				size="small"
-				fullwidth
-				type="passowrd"
-				value={user.confirmPassword}
-				onChange={(e) => {
-					setUser((prev) => ({ ...prev, confirmPassword: e.target.value }));
-				}}
-				name=""
-				id=""
-				label="Confirm Password"
-			/>
-			<div style={{width:"100%", textAlign:"right"}}>
-			<Button onClick={addUser}>Signup</Button>
-			</div>
-			<p>
-				Already have an account?{" "}
-				<Link to="/login">
-					<strong>Login</strong>
-				</Link>
-			</p>
+				<TextField
+					variant="outlined"
+					size="small"
+					fullwidth
+					autoFocus
+					type="text"
+					value={user.username}
+					onChange={(e) => {
+						setUser((prev) => ({ ...prev, username: e.target.value }));
+					}}
+					name=""
+					id=""
+					label="Username"
+				/>
+				<TextField
+					variant="outlined"
+					size="small"
+					fullwidth
+					type="email"
+					name=""
+					value={user.email}
+					onChange={(e) => {
+						setUser((prev) => ({ ...prev, email: e.target.value }));
+					}}
+					id=""
+					label="Email"
+				/>
+				<TextField
+					variant="outlined"
+					size="small"
+					fullwidth
+					type="passowrd"
+					value={user.password}
+					onChange={(e) => {
+						setUser((prev) => ({ ...prev, password: e.target.value }));
+					}}
+					name=""
+					id=""
+					label="Password"
+				/>
+				<TextField
+					variant="outlined"
+					size="small"
+					fullwidth
+					type="passowrd"
+					value={user.confirmPassword}
+					onChange={(e) => {
+						setUser((prev) => ({ ...prev, confirmPassword: e.target.value }));
+					}}
+					name=""
+					id=""
+					label="Confirm Password"
+				/>
+				<div style={{ width: "100%", textAlign: "right" }}>
+					<Button onClick={addUser}>Signup</Button>
+				</div>
+				<p>
+					Already have an account?{" "}
+					<Link to="/login">
+						<strong>Login</strong>
+					</Link>
+				</p>
 			</Stack>
 		</div>
 	);
