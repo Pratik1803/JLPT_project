@@ -86,7 +86,6 @@ function Home({ setWord, word }) {
 					userFavs: result.data.favs,
 				}));
 			}
-			console.log(result.data);
 		} catch (error) {
 			console.log(error);
 		}

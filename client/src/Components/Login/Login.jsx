@@ -21,7 +21,7 @@ function Login() {
 				url: "/login_user",
 				data: user,
 			});
-			if (!result.data) {
+			if (!result.data.auth) {
 				alert("Login failed!");
 			} else {
 				alert("login Successful!");
