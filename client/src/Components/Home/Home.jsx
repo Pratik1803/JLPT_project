@@ -98,7 +98,7 @@ function Home({ setWord, word }) {
 				url: "/logout",
 				withCredentials: true,
 			});
-			if (result.data.status == 200) {
+			if (result.data.statufs == 200) {
 				setStates((prev) => ({ ...prev, userLoggedIn: false }));
 				navigator("/login");
 			}
@@ -173,6 +173,15 @@ function Home({ setWord, word }) {
 
 	useEffect(() => {
 		auth();
+		// window.addEventListener("keydown", (e)=>{
+		// 	if(e.key === "ArrowLeft"){
+		// 		getPrevWord();
+		// 	}else if(e.key === "ArrowRight"){
+		// 		getNextWord();
+		// 	}else if(e.key === "Enter"){
+		// 		setShow(!show);
+		// 	}
+		// })
 	}, []);
 
 	useEffect(() => {
@@ -188,6 +197,7 @@ function Home({ setWord, word }) {
 	return (
 		<>
 			<h1>{showFavs ? "Bookmarked Words" : "JLPT-Kanjis"}</h1>
+			{showFavs&&<p>Total bookmared words: {words?.length}</p>}
 			{!showFavs && (
 				<Stack>
 					<p>Select Level:</p>

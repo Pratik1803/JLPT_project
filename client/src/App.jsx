@@ -42,7 +42,7 @@ function App() {
 	});
 
 	return (
-		<div className={Styles.app}>
+		<div className={`${Styles.app} app`}>
 				<StateContext.Provider value={{ word, states, setStates }}>
 					<Routes>
 						<Route path="/" element={<Home word={word} setWord={setWord} />} />
