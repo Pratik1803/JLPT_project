@@ -271,7 +271,7 @@ function Home({ setWord, word }) {
 					</div>
 				</>
 			)}
-			{states.userID === "627e1957180dd53773615c17" && (
+			{states.userID === "62bc1e8aa3d798bd59cc3b35" && (
 				<Link to="/add">
 					<Button className={Styles.add_btn}>Add Kanji</Button>
 				</Link>
